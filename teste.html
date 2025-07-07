@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Tableau de Bord</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* Styles personnalisés pour une meilleure mise en page */
+        .dashboard-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .dashboard-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .item-actions .btn {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Tableau de Bord</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addItemModal">Ajouter un élément</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center">Mes Éléments Personnels</h1>
+
+        <div id="dashboard-items" class="row">
+            <div class="col-md-6 col-lg-4" data-id="1">
+                <div class="dashboard-item">
+                    <img src="your_image_name.jpg" class="img-fluid" alt="Image exemple"> <h3 class="item-title">Titre de l'Image 1</h3>
+                    <p class="item-date text-muted">Date d'insertion: 01/01/2024</p>
+                    <p class="item-description">Ceci est une brève description de l'image. Elle peut contenir des détails pertinents sur le contenu.</p>
+                    <div class="item-actions">
+                        <button class="btn btn-warning btn-sm edit-item" data-bs-toggle="modal" data-bs-target="#editItemModal">Modifier</button>
+                        <button class="btn btn-danger btn-sm delete-item">Supprimer</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+
+    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addItemModalLabel">Ajouter un nouvel élément</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addItemForm">
+                        <div class="mb-3">
+                            <label for="newTitle" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="newTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newImage" class="form-label">Image (Chemin local)</label>
+                            <input type="file" class="form-control" id="newImage" accept="image/*">
+                            <small class="text-muted">Sélectionnez une image de votre ordinateur.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newDate" class="form-label">Date d'insertion</label>
+                            <input type="date" class="form-control" id="newDate" value="" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="newDescription" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editItemModalLabel">Modifier l'élément</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editItemForm">
+                        <input type="hidden" id="editItemId">
+                        <div class="mb-3">
+                            <label for="editTitle" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="editTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editImage" class="form-label">Image (Chemin local)</label>
+                            <input type="file" class="form-control" id="editImage" accept="image/*">
+                            <small class="text-muted">Sélectionnez une nouvelle image si vous souhaitez la modifier.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDate" class="form-label">Date d'insertion</label>
+                            <input type="date" class="form-control" id="editDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="editDescription" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dashboardItemsContainer = document.getElementById('dashboard-items');
+            const addItemForm = document.getElementById('addItemForm');
+            const editItemForm = document.getElementById('editItemForm');
+            const editItemModal = new bootstrap.Modal(document.getElementById('editItemModal'));
+            let currentEditItem = null;
+            let nextId = 2; // Pour donner des ID uniques aux nouveaux éléments
+
+            // Fonction pour ajouter un nouvel élément au tableau de bord
+            addItemForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const newTitle = document.getElementById('newTitle').value;
+                const newImageInput = document.getElementById('newImage');
+                const newDate = document.getElementById('newDate').value;
+                const newDescription = document.getElementById('newDescription').value;
+
+                let imageUrl = '';
+                if (newImageInput.files && newImageInput.files[0]) {
+                    // Pour afficher l'image locale, nous utilisons FileReader
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imageUrl = e.target.result;
+                        createNewDashboardItem(newTitle, imageUrl, newDate, newDescription);
+                    };
+                    reader.readAsDataURL(newImageInput.files[0]);
+                } else {
+                    // Si aucune image n'est sélectionnée, utilisez une image par défaut ou laissez vide
+                    createNewDashboardItem(newTitle, 'https://via.placeholder.com/150?text=No+Image', newDate, newDescription);
+                }
+
+                // Réinitialiser le formulaire
+                addItemForm.reset();
+                // Cacher la modale après l'ajout
+                const addItemModal = bootstrap.Modal.getInstance(document.getElementById('addItemModal'));
+                addItemModal.hide();
+            });
+
+            function createNewDashboardItem(title, imageUrl, date, description) {
+                const newItemHtml = `
+                    <div class="col-md-6 col-lg-4" data-id="${nextId}">
+                        <div class="dashboard-item">
+                            <img src="${imageUrl}" class="img-fluid" alt="${title}">
+                            <h3 class="item-title">${title}</h3>
+                            <p class="item-date text-muted">Date d'insertion: ${date}</p>
+                            <p class="item-description">${description}</p>
+                            <div class="item-actions">
+                                <button class="btn btn-warning btn-sm edit-item" data-bs-toggle="modal" data-bs-target="#editItemModal">Modifier</button>
+                                <button class="btn btn-danger btn-sm delete-item">Supprimer</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                dashboardItemsContainer.insertAdjacentHTML('beforeend', newItemHtml);
+                nextId++;
+            }
+
+            // Gestion des actions (modifier/supprimer) sur les éléments existants
+            dashboardItemsContainer.addEventListener('click', function(event) {
+                if (event.target.classList.contains('edit-item')) {
+                    const itemElement = event.target.closest('.col-md-6');
+                    currentEditItem = itemElement; // Garde une référence à l'élément en cours de modification
+
+                    // Remplir la modale de modification avec les données actuelles
+                    document.getElementById('editItemId').value = itemElement.dataset.id;
+                    document.getElementById('editTitle').value = itemElement.querySelector('.item-title').innerText;
+                    document.getElementById('editDate').value = itemElement.querySelector('.item-date').innerText.replace('Date d\'insertion: ', '');
+                    document.getElementById('editDescription').value = itemElement.querySelector('.item-description').innerText;
+
+                } else if (event.target.classList.contains('delete-item')) {
+                    if (confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
+                        event.target.closest('.col-md-6').remove();
+                    }
+                }
+            });
+
+            // Gérer la soumission du formulaire de modification
+            editItemForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                if (currentEditItem) {
+                    const editedTitle = document.getElementById('editTitle').value;
+                    const editedImageInput = document.getElementById('editImage');
+                    const editedDate = document.getElementById('editDate').value;
+                    const editedDescription = document.getElementById('editDescription').value;
+
+                    currentEditItem.querySelector('.item-title').innerText = editedTitle;
+                    currentEditItem.querySelector('.item-date').innerText = `Date d'insertion: ${editedDate}`;
+                    currentEditItem.querySelector('.item-description').innerText = editedDescription;
+
+                    if (editedImageInput.files && editedImageInput.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            currentEditItem.querySelector('img').src = e.target.result;
+                        };
+                        reader.readAsDataURL(editedImageInput.files[0]);
+                    }
+
+                    editItemModal.hide(); // Cacher la modale
+                    editItemForm.reset(); // Réinitialiser le formulaire
+                    currentEditItem = null; // Réinitialiser la référence
+                }
+            });
+
+            // Définir la date actuelle par défaut pour le champ de date
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            document.getElementById('newDate').value = `${year}-${month}-${day}`;
+            document.getElementById('editDate').value = `${year}-${month}-${day}`; // Aussi pour la modale d'édition initialement
+        });
+    </script>
+</body>
+</html>
